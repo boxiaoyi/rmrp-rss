@@ -1,4 +1,4 @@
-name: 更新人民锐评RSS
+name: 更新评论RSS
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:           # 也支持在 Actions 页面手动点一下立即运行
 
 permissions:
-  contents: write              # 允许把生成的 rmrp.xml 提交回仓库
+  contents: write              # 允许把生成的 xml 提交回仓库
 
 jobs:
   build:
@@ -16,15 +16,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: 生成 RSS（抓最新锐评 + 全文正文）
-        run: python3 rmrp_rss.py -o rmrp.xml
+      - name: 生成三个 RSS（抓取最新评论 + 全文正文）
+        run: |
+          python3 rmrp_rss.py -o rmrp.xml
+          python3 zjxc_rss.py -o zjxc.xml
+          python3 rmrb_comment_rss.py -o rmrb_comment.xml
       - name: 提交回仓库
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add rmrp.xml
-          git commit -m "chore: 更新人民锐评RSS $(date +%F)" || echo "无变化"
+          git add rmrp.xml zjxc.xml rmrb_comment.xml
+          git commit -m "chore: 更新评论RSS $(date +%F)" || echo "无变化"
           git push
       - name: 刷新 jsDelivr 缓存（让手机立刻拿到新内容）
         if: success()
-        run: curl -s "https://purge.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrp.xml" || true
+        run: |
+          for f in rmrp.xml zjxc.xml rmrb_comment.xml; do
+            curl -s "https://purge.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/$f" || true
+          done
