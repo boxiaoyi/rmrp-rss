@@ -1,0 +1,27 @@
+name: 更新人民锐评RSS
+
+on:
+  schedule:
+    - cron: '17 0 * * *'        # UTC 0:17 ≈ 北京 8:17 每天自动跑
+  workflow_dispatch:           # 也支持在 Actions 页面手动点一下立即运行
+
+permissions:
+  contents: write              # 允许把生成的 rmrp.xml 提交回仓库
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: 生成 RSS（抓最新锐评 + 全文正文）
+        run: python3 rmrp_rss.py -o rmrp.xml
+      - name: 提交回仓库
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add rmrp.xml
+          git commit -m "chore: 更新人民锐评RSS $(date +%F)" || echo "无变化"
+          git push
