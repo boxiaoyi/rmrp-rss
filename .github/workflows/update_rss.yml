@@ -25,3 +25,6 @@ jobs:
           git add rmrp.xml
           git commit -m "chore: 更新人民锐评RSS $(date +%F)" || echo "无变化"
           git push
+      - name: 刷新 jsDelivr 缓存（让手机立刻拿到新内容）
+        if: success()
+        run: curl -s "https://purge.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrp.xml" || true
