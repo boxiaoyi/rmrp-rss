@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>公考评论订阅（人民锐评 + 求是）</title>
+    <dateCreated>Wed, 30 Sep 2026 17:30:00 +0800</dateCreated>
+    <ownerName>boxiaoyi</ownerName>
+  </head>
+  <body>
+    <outline text="公考评论" title="公考评论">
+      <outline text="人民锐评" title="人民锐评" type="rss"
+               xmlUrl="https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrp.xml"
+               htmlUrl="http://opinion.people.com.cn/GB/436867/index.html"/>
+      <outline text="求是网" title="求是网" type="rss"
+               xmlUrl="https://rsshub.dicomp.net/qstheory/toutiao"
+               htmlUrl="https://www.qstheory.cn/"/>
+      <outline text="浙江宣传" title="浙江宣传" type="rss"
+               xmlUrl="https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/zjxc.xml"
+               htmlUrl="https://zjnews.zjol.com.cn/zjxc/"/>
+      <outline text="人民日报评论" title="人民日报评论" type="rss"
+               xmlUrl="https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrb_comment.xml"
+               htmlUrl="http://opinion.people.com.cn/GB/8213/49160/"/>
+    </outline>
+  </body>
+</opml>

@@ -1,0 +1,17 @@
+[
+  {
+    "sourceName": "人民锐评",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrp.xml",
+    "sourceIcon": "https://www.people.com.cn/favicon.ico"
+  },
+  {
+    "sourceName": "浙江宣传",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/zjxc.xml",
+    "sourceIcon": "https://zjnews.zjol.com.cn/favicon.ico"
+  },
+  {
+    "sourceName": "人民日报评论",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrb_comment.xml",
+    "sourceIcon": "https://www.people.com.cn/favicon.ico"
+  }
+]
