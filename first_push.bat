@@ -1,11 +1,49 @@
 @echo off
-chcp 65001 >nul
-REM é¦–æ¬¡ä¸Šä¼ ç”¨ï¼šæŠŠæœ¬æœºå·²æ•´ç†å¥½çš„ä»“åº“æ¨åˆ° GitHubï¼ˆåªæ¨é€ï¼Œä¸å†ç”Ÿæˆï¼Œä¿æŠ¤å·²æœ‰å¥½å†…å®¹ï¼‰
-REM åŒå‡»è¿è¡Œå³å¯ã€‚è‹¥æç¤ºè¾“å…¥ç”¨æˆ·å/å¯†ç ï¼Œç”¨æˆ·åå¡« GitHub è´¦å·ï¼Œå¯†ç å¡« Personal Access Tokenï¼ˆä¸æ˜¯ç™»å½•å¯†ç ï¼‰ã€‚
+setlocal
 cd /d "%~dp0"
-git fetch origin main
-git merge --allow-unrelated-histories -X ours origin/main
-git push -u origin main
+set LOG=%~dp0first_push_log.txt
+echo ===== Ê×´ÎÉÏ´« ¿ªÊ¼ÓÚ %date% %time% ===== > "%LOG%"
+echo ¹¤×÷Ä¿Â¼: %CD% >> "%LOG%"
 echo.
-echo å®Œæˆã€‚è‹¥ä¸Šæ–¹å‡ºç°ç”¨æˆ·å/å¯†ç æç¤ºï¼ŒæŒ‰ä¸Šé¢è¯´æ˜å¡« Token å³å¯ã€‚
-pause >nul
+echo [²½Öè] ¼ì²é git ...
+where git >nul 2>&1
+if errorlevel 1 (
+  echo [´íÎó] Î´ÕÒµ½ git£¬Çë°²×° Git for Windows ²¢¹´Ñ¡ Add to PATH¡£>> "%LOG%"
+  goto needauth
+)
+echo [²½Öè] 1/3 À­È¡Ô¶¶Ë main ...
+git fetch origin main >> "%LOG%" 2>&1
+if errorlevel 1 (
+  echo [Ê§°Ü] git fetch Ê§°Ü£¬¶à°ëÊÇ»¹Ã»µÇÂ¼ GitHub¡£>> "%LOG%"
+  goto needauth
+)
+echo [²½Öè] 2/3 ºÏ²¢£¨ÒÔ±¾»ú°æ±¾Îª×¼£©...
+git merge --allow-unrelated-histories -X ours origin/main >> "%LOG%" 2>&1
+if errorlevel 1 (
+  echo [ÌáÊ¾] ºÏ²¢Î´×Ô¶¯Íê³É£¬¼ÌĞø³¢ÊÔÍÆËÍ¡£>> "%LOG%"
+) else (
+  echo [ok] ºÏ²¢Íê³É¡£>> "%LOG%"
+)
+echo [²½Öè] 3/3 ÍÆËÍµ½ GitHub ...
+git push -u origin main >> "%LOG%" 2>&1
+if errorlevel 1 (
+  echo [Ê§°Ü] git push Ê§°Ü¡£>> "%LOG%"
+  goto needauth
+)
+echo [ok] ÍÆËÍ³É¹¦¡£>> "%LOG%"
+goto done
+
+:needauth
+echo.
+echo ½â¾ö°ì·¨£ºÍÆËÍĞèÒª GitHub Éí·İ¡£
+echo   1) ´ò¿ª https://github.com/settings/tokens Éú³É Token£¨¹´Ñ¡ repo È¨ÏŞ£©
+echo   2) ÖØĞÂË«»÷±¾ÎÄ¼ş£»Èôµ¯´°ÒªÓÃ»§Ãû/ÃÜÂë£º
+echo        ÓÃ»§Ãû = ÄãµÄ GitHub ÕËºÅ
+echo        ÃÜÂë  = ¸ÕÉú³ÉµÄ Token£¨²»ÊÇµÇÂ¼ÃÜÂë£©
+echo Ïê¼û first_push_log.txt
+
+:done
+echo.
+echo ===== ÔËĞĞ½áÊø¡£½á¹û¼û first_push_log.txt =====
+echo ÊäÈë exit ²¢»Ø³µ¿É¹Ø±Õ´Ë´°¿Ú¡£
+cmd /k

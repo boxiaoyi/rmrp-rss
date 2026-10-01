@@ -1,11 +1,11 @@
 @echo off
-chcp 65001 >nul
-REM æœ¬æœº(å›½å†…IP)ä¸€é”®æ›´æ–°ä¸‰ä¸ªRSSå¹¶æŽ¨é€åˆ°GitHub + åˆ·æ–°jsDelivr
-REM åŒå‡»è¿è¡Œå³å¯ï¼›é¦–æ¬¡ä½¿ç”¨è¯·å…ˆç¡®è®¤ rmrp-rss æ–‡ä»¶å¤¹æ˜¯ git ä»“åº“ï¼ˆè§ä¸‹æ–¹è¯´æ˜Žï¼‰
-set "PY=C:\Users\Lee\.workbuddy\binaries\python\versions\3.13.12\python.exe"
-if not exist "%PY%" set "PY=python"
+setlocal
 cd /d "%~dp0"
+set PY=C:\Users\Lee\.workbuddy\binaries\python\versions\3.13.12\python.exe
+if not exist "%PY%" set PY=python
+echo ÕýÔÚÉú³É±¾»ú(¹úÄÚIP)¸üÐÂ²¢ÍÆËÍµ½ GitHub£¬ÇëÉÔºò...
 "%PY%" update_and_push.py
 echo.
-echo æŒ‰ä»»æ„é”®å…³é—­çª—å£...
-pause >nul
+echo ÈôÉÏ·½³öÏÖÓÃ»§Ãû/ÃÜÂëÌáÊ¾£¬ÓÃ»§ÃûÌî GitHub ÕËºÅ£¬ÃÜÂëÌî Token£¨²»ÊÇµÇÂ¼ÃÜÂë£©¡£
+echo ÊäÈë exit ²¢»Ø³µ¿É¹Ø±Õ´Ë´°¿Ú¡£
+cmd /k
