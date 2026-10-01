@@ -12,7 +12,7 @@ BRANCH = "main"                                # 若仓库默认分支是 master
 
 # min: 硬性最少篇数；低于此数且低于旧文件50%则判定为抓取失败，保留旧文件
 SOURCES = [
-    {"name": "人民锐评",     "script": "rmrp_rss.py",        "xml": "rmrp.xml",           "min": 20},
+    {"name": "人民锐评",     "script": "rmrp_rss.py",        "xml": "rmrp.xml",           "min": 20, "require_api": True},
     {"name": "浙江宣传",     "script": "zjxc_rss.py",        "xml": "zjxc.xml",           "min": 20},
     {"name": "人民日报评论", "script": "rmrb_comment_rss.py","xml": "rmrb_comment.xml",   "min": 20},
 ]
@@ -52,6 +52,13 @@ def main():
         r = run([sys.executable, os.path.join(HERE, s["script"]), "-o", tmp])
         if r.returncode != 0:
             print("  ✗ 生成器报错，跳过：", r.stderr[:200])
+            continue
+        # 人民锐评：必须 3414 接口真正返回文章（即国内IP/网络正常），
+        # 否则只拿到 436867 归档兜底版，会丢 10-01 等新文，故保留旧文件不覆盖。
+        if s.get("require_api") and "[api] 话题返回" not in (r.stdout or ""):
+            print("  ✗ 3414 接口未取到（非国内IP或断网），保留旧文件，跳过")
+            try: os.remove(tmp)
+            except: pass
             continue
         new_n = count_items(tmp)
         old_n = count_items(os.path.join(REPO, s["xml"]))
