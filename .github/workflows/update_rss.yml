@@ -1,12 +1,19 @@
 name: 更新评论RSS
 
+# 调度说明：
+#   - schedule: 每天北京 08:17（UTC 00:17）自动跑一次（依赖 GitHub 服务器，IP 在美国）
+#   - workflow_dispatch: 也可在 Actions 页面手动点一下立即跑
+# 注意「人民锐评」主源是人民网+ App 话题接口 3414（api-app.people.cn）。
+#   该接口从美国 IP 可能取不到（静态页 436867 / 浙江宣传 / 人民日报评论 不受影响）。
+#   所以本流程对人民锐评做了「接口失败就保留旧文件、绝不覆盖好内容」的保护，
+#   跑完看日志里的 notice/warning 即可判断是否走通。
 on:
   schedule:
-    - cron: '17 0 * * *'        # UTC 0:17 ≈ 北京 8:17 每天自动跑
-  workflow_dispatch:           # 也支持在 Actions 页面手动点一下立即运行
+    - cron: '17 0 * * *'          # 北京 08:17 每天自动
+  workflow_dispatch:             # 手动触发
 
 permissions:
-  contents: write              # 允许把生成的 xml 提交回仓库
+  contents: write
 
 jobs:
   build:
@@ -16,19 +23,47 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: 生成三个 RSS（抓取最新评论 + 全文正文）
+
+      # 人民锐评：3414 App 接口（美 IP 可能取不到，故失败保留旧文件）
+      - name: 生成人民锐评 RSS（3414 接口，失败则保留旧文件）
         run: |
-          python3 rmrp_rss.py -o rmrp.xml
-          python3 zjxc_rss.py -o zjxc.xml
-          python3 rmrb_comment_rss.py -o rmrb_comment.xml
+          out=$(python3 rmrp_rss.py -o rmrp_new.xml 2>&1)
+          echo "$out"
+          if echo "$out" | grep -qE '\[api\] 话题返回 [1-9][0-9]* 篇'; then
+            mv rmrp_new.xml rmrp.xml
+            echo "::notice::人民锐评已更新（3414 接口正常）"
+          else
+            rm -f rmrp_new.xml
+            git checkout -- rmrp.xml 2>/dev/null || true
+            echo "::warning::3414 接口未取到内容，保留旧 rmrp.xml（不覆盖）"
+          fi
+
+      # 浙江宣传 / 人民日报评论：静态页，美 IP 安全
+      - name: 生成浙江宣传 RSS
+        run: python3 zjxc_rss.py -o zjxc.xml
+      - name: 生成人民日报评论 RSS
+        run: python3 rmrb_comment_rss.py -o rmrb_comment.xml
+
+      # 校验人民锐评篇数（异常不提交，避免覆盖好内容）
+      - name: 校验人民锐评篇数
+        run: |
+          n=$(grep -c "<item>" rmrp.xml || true)
+          echo "人民锐评篇数=$n"
+          if [ "$n" -lt 100 ]; then
+            echo "::error::人民锐评抓取异常($n篇)，终止提交"
+            exit 1
+          fi
+
       - name: 提交回仓库
+        if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add rmrp.xml zjxc.xml rmrb_comment.xml
+          git add -A
           git commit -m "chore: 更新评论RSS $(date +%F)" || echo "无变化"
           git push
-      - name: 刷新 jsDelivr 缓存（让手机立刻拿到新内容）
+
+      - name: 刷新 jsDelivr 缓存
         if: success()
         run: |
           for f in rmrp.xml zjxc.xml rmrb_comment.xml; do
