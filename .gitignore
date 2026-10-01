@@ -1,0 +1,9 @@
+# 构建/运行产生的临时文件
+*.log
+build_log.txt
+__pycache__/
+*.pyc
+
+# ePub 是本地给 Kindle 用的产物，体积大，不进仓库（CDN 只服务 XML）
+*.epub
+rmrp_new.xml

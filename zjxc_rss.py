@@ -4,7 +4,6 @@
 # 列表: https://zjnews.zjol.com.cn/zjxc/ (分页 index.shtml / index_1.shtml ...)
 # 正文: 每篇详情页 <div class="content"> 容器内 <p> 段落
 import urllib.request, re, ssl, sys, html as ihtml, time
-from http.server import HTTPServer, BaseHTTPRequestHandler
 
 ctx = ssl.create_default_context(); ctx.check_hostname = False; ctx.verify_mode = ssl.CERT_NONE
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"

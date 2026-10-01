@@ -6,7 +6,6 @@
 #         人民时评 / 人民论坛 / 本报评论员 / 人民观点 / 评论员观察 / 现场评论
 #       详情页正文容器同人民锐评: <div id="rm_txt_zw">
 import urllib.request, re, ssl, sys, html as ihtml, time
-from http.server import HTTPServer, BaseHTTPRequestHandler
 
 ctx = ssl.create_default_context(); ctx.check_hostname = False; ctx.verify_mode = ssl.CERT_NONE
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
@@ -15,7 +14,10 @@ ICON = "https://www.people.com.cn/favicon.ico"
 A_RE = re.compile(r'<a[^>]+href=([\"\'])([^\"\']+)\1[^>]*>(.*?)</a>', re.S)
 ART_RE = re.compile(r'/n1/(\d{4})/(\d{2})(\d{2})/c\d+-\d+\.html')
 # 子栏目（人民日报评论各板块）；不含 436867 人民锐评
+# 注意：49160 主栏目落地页会列出最新的「今日谈」「社论」等（常含当日文章），
+#      必须扫描，否则像 2026-10-01 那篇「弘扬英烈精神…（今日谈）」会被漏掉。
 SUBCATS = {
+    "人民日报评论首页": "http://opinion.people.com.cn/GB/8213/49160/index.html",
     "人民时评":   "http://opinion.people.com.cn/GB/8213/49160/49219/index.html",
     "人民论坛":   "http://opinion.people.com.cn/GB/8213/49160/49220/index.html",
     "本报评论员": "http://opinion.people.com.cn/GB/8213/49160/49217/index.html",
@@ -35,27 +37,35 @@ def get(url):
         return None
 
 
-def parse_subcat(url, seen, cat):
-    try:
-        d = get(url)
-    except Exception:
-        return []
+def parse_subcat(url, seen, cat, pages=6):
+    """扫一个栏目页及其分页（index.html / index2.html ...），抓全部文章链接。"""
     items = []
-    for m in A_RE.finditer(d):
-        href = m.group(2).strip()
-        am = ART_RE.search(href)
-        if not am:
-            continue
-        if href.startswith("/"):
-            href = BASE + href
-        if href in seen:
-            continue
-        text = re.sub(r"<[^>]+>", "", m.group(3)).strip()
-        if not text or len(text) < 4:
-            continue
-        seen.add(href)
-        date = "%s-%s-%s" % (am.group(1), am.group(2), am.group(3))
-        items.append((text, href, date, cat))
+    base = url.rsplit("index.html", 1)[0]
+    for p in range(pages):
+        u = url if p == 0 else base + "index%d.html" % (p + 1)
+        d = get(u)
+        if not d:
+            break
+        got = 0
+        for m in A_RE.finditer(d):
+            href = m.group(2).strip()
+            am = ART_RE.search(href)
+            if not am:
+                continue
+            if href.startswith("/"):
+                href = BASE + href
+            if href in seen:
+                continue
+            text = re.sub(r"<[^>]+>", "", m.group(3)).strip()
+            if not text or len(text) < 4:
+                continue
+            seen.add(href)
+            date = "%s-%s-%s" % (am.group(1), am.group(2), am.group(3))
+            items.append((text, href, date, cat))
+            got += 1
+        time.sleep(0.3)
+        if got == 0:
+            break
     return items
 
 
