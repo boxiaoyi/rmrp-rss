@@ -72,12 +72,10 @@ def parse_subcat(url, seen, cat, pages=6):
 def parse_list(limit=200):
     items, seen = [], set()
     for cat, url in SUBCATS.items():
-        if len(items) >= limit:
-            break
         batch = parse_subcat(url, seen, cat)
         items.extend(batch)
         time.sleep(0.3)
-    return items[:limit]
+    return items
 
 
 def parse_detail(link, date_hint=""):
@@ -105,8 +103,11 @@ def esc(s):
     return ihtml.escape(s, quote=True)
 
 
-def build_rss():
+def build_rss(limit=200):
     items = parse_list()
+    # 全局按发布时间倒序（最新在前）。date 为 "YYYY-MM-DD" 字符串，字典序即日期序
+    items.sort(key=lambda x: x[2], reverse=True)
+    items = items[:limit]
     out = ['<?xml version="1.0" encoding="utf-8"?>',
            '<rss version="2.0"><channel>',
            '<title>人民日报评论</title>', '<link>%s/GB/8213/49160/</link>' % BASE,
