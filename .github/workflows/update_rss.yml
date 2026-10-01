@@ -1,7 +1,7 @@
 name: 更新评论RSS
 
 # 调度说明：
-#   - schedule: 每天北京 08:17（UTC 00:17）自动跑一次（依赖 GitHub 服务器，IP 在美国）
+#   - schedule: 每天北京 08:17（UTC 00:17）与 20:17（UTC 12:17）各自动跑一次（依赖 GitHub 服务器，IP 在美国）
 #   - workflow_dispatch: 也可在 Actions 页面手动点一下立即跑
 # 注意「人民锐评」主源是人民网+ App 话题接口 3414（api-app.people.cn）。
 #   该接口从美国 IP 可能取不到（静态页 436867 / 浙江宣传 / 人民日报评论 不受影响）。
@@ -10,6 +10,7 @@ name: 更新评论RSS
 on:
   schedule:
     - cron: '17 0 * * *'          # 北京 08:17 每天自动
+    - cron: '17 12 * * *'         # 北京 20:17 每天自动（当天新文基本不漏）
   workflow_dispatch:             # 手动触发
 
 permissions:
