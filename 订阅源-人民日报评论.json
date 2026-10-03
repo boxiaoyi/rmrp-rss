@@ -1,0 +1,12 @@
+[
+  {
+    "sourceName": "人民日报评论",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrb_comment.xml",
+    "ruleArticles": "##",
+    "ruleTitle": "title",
+    "ruleLink": "link",
+    "ruleContent": "description",
+    "ruleDate": "pubDate",
+    "ruleImage": ""
+  }
+]
