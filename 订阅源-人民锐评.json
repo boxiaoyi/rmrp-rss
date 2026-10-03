@@ -1,0 +1,12 @@
+[
+  {
+    "sourceName": "人民锐评",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrp.xml",
+    "ruleArticles": "##",
+    "ruleTitle": "title",
+    "ruleLink": "link",
+    "ruleContent": "description",
+    "ruleDate": "pubDate",
+    "ruleImage": ""
+  }
+]
