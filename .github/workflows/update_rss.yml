@@ -65,7 +65,9 @@ jobs:
           cp rmrp.xml          lite/rmrp.xml
           cp zjxc.xml          lite/zjxc.xml
           cp rmrb_comment.xml  lite/rmrb_comment.xml
-          cp qs_comment.xml    lite/qs_comment.xml
+          # qs 用 qs.xml 这个新路径：lite/qs_comment.xml 已被 CDN 缓存节点锁死
+          # （@main / @sha / ?v= 三种写法都只返回旧内容），换路径才能回源拿到新版
+          cp qs_comment.xml    lite/qs.xml
           ls -l lite/
 
       - name: 提交回仓库
@@ -80,6 +82,6 @@ jobs:
       - name: 刷新 jsDelivr 缓存
         if: success()
         run: |
-          for f in rmrp.xml zjxc.xml rmrb_comment.xml qs_comment.xml; do
+          for f in rmrp.xml zjxc.xml rmrb_comment.xml qs.xml; do
             curl -s "https://purge.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/$f" || true
           done
