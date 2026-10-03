@@ -47,7 +47,7 @@ def norm_key(title):
 
 
 # ============ 主源：App 话题接口 ============
-def fetch_api_items(limit=60):
+def fetch_api_items(limit=30):
     """抓 App「人民锐评」话题，返回 [{title, link, date, desc}, ...]（已含全文）"""
     items = []
     try:
@@ -119,7 +119,7 @@ def parse_column_page(url, seen):
     return out
 
 
-def fetch_column_items(limit=200):
+def fetch_column_items(limit=30):
     items, seen = [], set()
     batch = parse_column_page(COL_FIRST, seen)
     items.extend(batch)
