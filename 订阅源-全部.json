@@ -1,7 +1,7 @@
 [
   {
     "sourceName": "人民锐评",
-    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrp.xml",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/lite/rmrp.xml",
     "ruleArticles": "##",
     "ruleTitle": "title",
     "ruleLink": "link",
@@ -11,7 +11,7 @@
   },
   {
     "sourceName": "人民日报评论",
-    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrb_comment.xml",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/lite/rmrb_comment.xml",
     "ruleArticles": "##",
     "ruleTitle": "title",
     "ruleLink": "link",
@@ -21,7 +21,7 @@
   },
   {
     "sourceName": "浙江宣传",
-    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/zjxc.xml",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/lite/zjxc.xml",
     "ruleArticles": "##",
     "ruleTitle": "title",
     "ruleLink": "link",
@@ -31,7 +31,7 @@
   },
   {
     "sourceName": "求是网评",
-    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/qs_comment.xml",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/lite/qs_comment.xml",
     "ruleArticles": "##",
     "ruleTitle": "title",
     "ruleLink": "link",
