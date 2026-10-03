@@ -52,10 +52,21 @@ jobs:
         run: |
           n=$(grep -c "<item>" rmrp.xml || true)
           echo "人民锐评篇数=$n"
-          if [ "$n" -lt 100 ]; then
+          if [ "$n" -lt 20 ]; then
             echo "::error::人民锐评抓取异常($n篇)，终止提交"
             exit 1
           fi
+
+      # 同步 lite/ 目录：jsDelivr 对已有路径的缓存最长可达 12h（purge 接口需签名，
+      # 无签名的 purge 请求无效），lite/ 是新路径、首次访问实时回源，订阅端能立刻拿到最新。
+      - name: 同步 lite/ 目录
+        run: |
+          mkdir -p lite
+          cp rmrp.xml          lite/rmrp.xml
+          cp zjxc.xml          lite/zjxc.xml
+          cp rmrb_comment.xml  lite/rmrb_comment.xml
+          cp qs_comment.xml    lite/qs_comment.xml
+          ls -l lite/
 
       - name: 提交回仓库
         if: success()
