@@ -69,7 +69,7 @@ def parse_subcat(url, seen, cat, pages=6):
     return items
 
 
-def parse_list(limit=200):
+def parse_list(limit=30):
     items, seen = [], set()
     for cat, url in SUBCATS.items():
         batch = parse_subcat(url, seen, cat)
@@ -103,7 +103,7 @@ def esc(s):
     return ihtml.escape(s, quote=True)
 
 
-def build_rss(limit=200):
+def build_rss(limit=30):
     items = parse_list()
     # 全局按发布时间倒序（最新在前）。date 为 "YYYY-MM-DD" 字符串，字典序即日期序
     items.sort(key=lambda x: x[2], reverse=True)
