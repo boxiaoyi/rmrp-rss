@@ -44,6 +44,8 @@ jobs:
         run: python3 zjxc_rss.py -o zjxc.xml
       - name: 生成人民日报评论 RSS
         run: python3 rmrb_comment_rss.py -o rmrb_comment.xml
+      - name: 生成求是网评 RSS
+        run: python3 qs_comment_rss.py -o qs_comment.xml
 
       # 校验人民锐评篇数（异常不提交，避免覆盖好内容）
       - name: 校验人民锐评篇数
@@ -67,6 +69,6 @@ jobs:
       - name: 刷新 jsDelivr 缓存
         if: success()
         run: |
-          for f in rmrp.xml zjxc.xml rmrb_comment.xml; do
+          for f in rmrp.xml zjxc.xml rmrb_comment.xml qs_comment.xml; do
             curl -s "https://purge.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/$f" || true
           done

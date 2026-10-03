@@ -1,0 +1,66 @@
+[
+  {
+    "bookSourceName": "人民锐评",
+    "bookSourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrp.xml",
+    "bookSourceType": 3,
+    "bookSourceComment": "人民网锐评 RSS（app接口3414+436867归档），Actions每日08:17/20:17保活",
+    "ruleArticles": [
+      {
+        "articleRule": "##",
+        "titleRule": "title",
+        "linkRule": "link",
+        "contentRule": "description",
+        "imageRule": "",
+        "dateRule": "pubDate"
+      }
+    ]
+  },
+  {
+    "bookSourceName": "人民日报评论",
+    "bookSourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrb_comment.xml",
+    "bookSourceType": 3,
+    "bookSourceComment": "人民日报评论（按发布时间倒序），Actions每日08:17/20:17更新",
+    "ruleArticles": [
+      {
+        "articleRule": "##",
+        "titleRule": "title",
+        "linkRule": "link",
+        "contentRule": "description",
+        "imageRule": "",
+        "dateRule": "pubDate"
+      }
+    ]
+  },
+  {
+    "bookSourceName": "浙江宣传",
+    "bookSourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/zjxc.xml",
+    "bookSourceType": 3,
+    "bookSourceComment": "浙江宣传网 RSS，Actions每日08:17/20:17更新",
+    "ruleArticles": [
+      {
+        "articleRule": "##",
+        "titleRule": "title",
+        "linkRule": "link",
+        "contentRule": "description",
+        "imageRule": "",
+        "dateRule": "pubDate"
+      }
+    ]
+  },
+  {
+    "bookSourceName": "求是网评",
+    "bookSourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/qs_comment.xml",
+    "bookSourceType": 3,
+    "bookSourceComment": "求是网评栏目评论文章（替换已失效的RSSHub求是源），Actions每日08:17/20:17更新",
+    "ruleArticles": [
+      {
+        "articleRule": "##",
+        "titleRule": "title",
+        "linkRule": "link",
+        "contentRule": "description",
+        "imageRule": "",
+        "dateRule": "pubDate"
+      }
+    ]
+  }
+]
