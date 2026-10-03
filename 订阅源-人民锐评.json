@@ -1,7 +1,7 @@
 [
   {
     "sourceName": "人民锐评",
-    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/rmrp.xml",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/lite/rmrp.xml",
     "ruleArticles": "##",
     "ruleTitle": "title",
     "ruleLink": "link",
