@@ -47,7 +47,7 @@ def parse_list_page(url, seen):
     return items
 
 
-def parse_list(limit=200):
+def parse_list(limit=30):
     items, seen = [], set()
     pages = [LIST_BASE + "index.shtml"] + [LIST_BASE + "index_%d.shtml" % i for i in range(1, 12)]
     for url in pages:
