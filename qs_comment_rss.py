@@ -68,7 +68,7 @@ def fetch(url):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("-o", "--out", default="qs_comment.xml")
-    ap.add_argument("-n", "--limit", type=int, default=0)
+    ap.add_argument("-n", "--limit", type=int, default=30)
     args = ap.parse_args()
 
     urls = parse_list()
