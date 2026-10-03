@@ -1,7 +1,7 @@
 [
   {
     "sourceName": "浙江宣传",
-    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/zjxc.xml",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/lite/zjxc.xml",
     "ruleArticles": "##",
     "ruleTitle": "title",
     "ruleLink": "link",
