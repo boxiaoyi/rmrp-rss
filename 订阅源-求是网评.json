@@ -1,18 +1,12 @@
 [
   {
-    "bookSourceName": "求是网评",
-    "bookSourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/qs_comment.xml",
-    "bookSourceType": 3,
-    "bookSourceComment": "求是网评栏目评论文章（含全文，离线可读）；替代已失效的 RSSHub 求是源 https://rsshub.dicomp.net/qstheory/toutiao",
-    "ruleArticles": [
-      {
-        "articleRule": "##",
-        "titleRule": "title",
-        "linkRule": "link",
-        "contentRule": "description",
-        "imageRule": "",
-        "dateRule": "pubDate"
-      }
-    ]
+    "sourceName": "求是网评",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/boxiaoyi/rmrp-rss@main/lite/qs_comment.xml",
+    "ruleArticles": "##",
+    "ruleTitle": "title",
+    "ruleLink": "link",
+    "ruleContent": "description",
+    "ruleDate": "pubDate",
+    "ruleImage": ""
   }
 ]
